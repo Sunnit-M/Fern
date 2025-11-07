@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src="" alt="Project Logo" width="200" height="200"/>
+<img src="https://raw.githubusercontent.com/Sunnit-M/Fern/refs/heads/master/assets/FernIcon.png" alt="Project Logo" width="200" height="200"/>
 <br/>
 Fern
 <hr/>
