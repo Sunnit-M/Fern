@@ -16,6 +16,5 @@ jobs:
 
       - name: Sync Readme
         env:
-          MODRINTH_TOKEN = ${{ secrets.MODRINTH_TOKEN }}
-        run: |
-          ./gradlew modrinthSyncBody
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: ./gradlew modrinthSyncBody
