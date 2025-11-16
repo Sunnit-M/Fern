@@ -1,0 +1,21 @@
+name: "Sync Readme"
+
+on:
+  push:
+    paths:
+        - "README.md"
+
+jobs:
+  sync:
+    name: Sync README
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync Readme
+        env:
+          MODRINTH_TOKEN = ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          ./gradlew modrinthSyncBody
