@@ -1,9 +1,9 @@
-name: "Sync Readme"
+name: Sync Readme
 
 on:
   push:
     paths:
-        - "README.md"
+      - README.md
 
 jobs:
   sync:
@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
 
       - name: Sync Readme
         env:
