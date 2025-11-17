@@ -6,9 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class CompressedPermissionInPlayer implements BaseDataType {
+public class PermissionInPlayer implements BaseDataType {
     public static class playerData {
         public String playerUser;
         public List<String> permissions;
@@ -21,7 +20,7 @@ public class CompressedPermissionInPlayer implements BaseDataType {
 
     public HashMap<String, playerData> data;
 
-    public CompressedPermissionInPlayer() {
+    public PermissionInPlayer() {
         this.data = new HashMap<>();
     }
     
@@ -99,14 +98,14 @@ public class CompressedPermissionInPlayer implements BaseDataType {
     public void load() {
         if (!baseData.exists()) {
             try (FileWriter writer = new FileWriter(baseData)) {
-                CompressedPermissionInPlayer data = new CompressedPermissionInPlayer();
+                PermissionInPlayer data = new PermissionInPlayer();
                 gson.toJson(data, writer);
             } catch (Exception e) {
                 FernServerInit.LOGGER.error("[Fern] Failed to create data file!");
             }
         } else {
             try (FileReader reader = new FileReader(baseData)) {
-                CompressedPermissionInPlayer data = gson.fromJson(reader, CompressedPermissionInPlayer.class);
+                PermissionInPlayer data = gson.fromJson(reader, PermissionInPlayer.class);
             } catch (Exception e) {
                 FernServerInit.LOGGER.error("[Fern] Failed to read data file!");
             }

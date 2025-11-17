@@ -19,12 +19,10 @@ Fern is a JSON based Permission System made to be easy to use and implement, wit
 5. Start The Server Again.
 
 ## Data Storage Types
-| Type | Description                                                               | Pros     |
-|------|---------------------------------------------------------------------------|----------|
-| `0`  | Stores Data in one file with permissions inside of the player             | Untested |
-| `1`  | Stores Data in with file per player, and players inside                   | Untested |
-| `2`  | Stores Data in one file with players inside of each permission            | Untested |
-| `3`  | Stores Data with one file per permission with each player with it inside. | Untested |
+| Type | Description                                                              | Pros     |
+|------|--------------------------------------------------------------------------|----------|
+| `0`  | Stores Data With Permissions In Player (Player {Assigned Perms})         | Untested |
+| `1`  | Stores Data With Players In Permissions (Permission {Players Assigned})  | Untested |
 
 Only data type one is supported at the moment.
 And data does not port to new data type yet.
