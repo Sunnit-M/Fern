@@ -3,6 +3,7 @@ package net.justsunnit.fern;
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.api.ModInitializer;
 
+import net.justsunnit.fern.DataTypes.PlayerDirectory;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
@@ -61,5 +62,13 @@ public class Fern  {
 
     public static Predicate<ServerCommandSource> require(@NotNull String permission) {
         return source -> check(source, permission);
+    }
+
+    public static String getPlayerUserFromUUID(@NotNull String uuid) {
+        return PlayerDirectory.getUsername(uuid);
+    }
+
+    public static String getUUIDFromPlayerUser(@NotNull String playerUser) {
+        return PlayerDirectory.getUUID(playerUser);
     }
 }
