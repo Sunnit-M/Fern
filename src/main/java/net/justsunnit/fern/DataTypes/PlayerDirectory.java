@@ -24,6 +24,28 @@ public class PlayerDirectory {
         write();
     }
 
+    public static String getUsername(String UUID){
+        checkFile();
+        if(directory.containsKey(UUID)){
+            return directory.get(UUID);
+        }
+        FernServerInit.LOGGER.error("[Fern] Player with UUID " + UUID + " not found in directory.");
+        return null;
+    }
+
+    public static String getUUID(String playerUser){
+        checkFile();
+        return directory.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().equals(playerUser))
+                .map(HashMap.Entry::getKey)
+                .findFirst()
+                .orElseGet(() -> {
+                    FernServerInit.LOGGER.error("[Fern] Player with username " + playerUser + " not found in directory.");
+                    return null;
+                });
+    }
+
     private static void write(){
         if(!file.exists()){
             try {
