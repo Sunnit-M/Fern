@@ -45,11 +45,10 @@ dependencies {
 ```
 `properties.gradle`
 ```properties
-fern_version=0.1.0
+fern_version=0.3.0
 ```
 
 ## What's Next
-- More Data Storage Types
 - Commands
 - WIKI
 - Support for more platforms
