@@ -161,4 +161,33 @@ public class Fern  {
     public static String getUUIDFromPlayerUser(@NotNull String playerUser) {
         return PlayerDirectory.getUUID(playerUser);
     }
+
+    /**
+     * removes the specified permission from the player.
+     * Example permission format: "(ModId).(BasePermissionLevel(Owner/Admin/Mod/Member)).(SpecificPermission)"
+     * @param player the player to remove the permission from
+     * @param permission the permission to remove
+     */
+    public static void removePermission(@NotNull ServerPlayerEntity player, @NotNull String permission) {
+        FernServerInit.data.removePermission(player.getUuidAsString(), permission);
+    }
+    /**
+     * removes the specified permission from the player.
+     * Example permission format: "(ModId).(BasePermissionLevel(Owner/Admin/Mod/Member)).(SpecificPermission)"
+     * @param source the server command source to remove the permission from
+     * @param permission the permission to remove
+     */
+    public static void removePermission(@NotNull ServerCommandSource source, @NotNull String permission) {
+        FernServerInit.data.removePermission(source.getPlayer().getUuidAsString(), permission);
+    }
+
+    /**
+     * removes the specified permission from the player.
+     * Example permission format: "(ModId).(BasePermissionLevel(Owner/Admin/Mod/Member)).(SpecificPermission)"
+     * @param profile the game profile of the player to remove the permission from (For possibly offline players)
+     * @param permission the permission to remove
+     */
+    public static void removePermission(@NotNull GameProfile profile, @NotNull String permission) {
+        FernServerInit.data.removePermission(profile.id().toString(), permission);
+    }
 }
