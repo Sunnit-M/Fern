@@ -12,12 +12,6 @@ import java.io.FileWriter;
 
 public class ConfigHandler {
     public static File configFile = FabricLoader.getInstance().getConfigDir().resolve("fern.json").toFile();
-
-    // 0 - One File, UUID { User , Perms:[] }
-    // 1 - One File, Each Perm { Player1, Player2 }
-    // 2 - Each Player One File { Perms:[] }
-    // 3 - Each Perm One File { Player1, Player2 }
-
     public static int dataType = 0;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 

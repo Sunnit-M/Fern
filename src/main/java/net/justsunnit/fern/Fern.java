@@ -3,10 +3,13 @@ package net.justsunnit.fern;
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.justsunnit.fern.DataTypes.PlayerDirectory;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +21,15 @@ public class Fern  {
      * Example permission format: "(ModId).(BasePermissionLevel(Owner/Admin/Mod/Member)).(SpecificPermission)"
      * @param player the player to check permission for
      * @param permission the permission node to check
+     * @param MinOpLevel the minimum op level required to bypass permission check (nullable)
      * @return true if player has permission, false if not
      */
-    public static boolean check(@NotNull ServerPlayerEntity player,@NotNull String permission) {
+    public static boolean check(@NotNull ServerPlayerEntity player,@NotNull String permission, @Nullable Number MinOpLevel) {
+        if (MinOpLevel != null) {
+            if (player.hasPermissionLevel(MinOpLevel.intValue())) {
+                return true;
+            }
+        }
         return FernServerInit.data.checkPermission(player.getUuidAsString(), permission);
     }
     
@@ -29,10 +38,16 @@ public class Fern  {
      * Example permission format: "(ModId).(BasePermissionLevel(Owner/Admin/Mod/Member)).(SpecificPermission)"
      * @param source the server command source to check permission for
      * @param permission the permission node to check
+     * @param MinOpLevel the minimum op level required to bypass permission check (nullable)
      * @return true if player has permission, false if not
      */
-    public static boolean check(@NotNull ServerCommandSource source,@NotNull String permission) {
+    public static boolean check(@NotNull ServerCommandSource source,@NotNull String permission, @Nullable Number MinOpLevel) {
         if(!source.isExecutedByPlayer()) return true;
+        if(MinOpLevel != null) {
+            if(source.hasPermissionLevel(MinOpLevel.intValue())){
+                return true;
+            }
+        }
         return FernServerInit.data.checkPermission(source.getPlayer().getUuidAsString(), permission);
     }
 
@@ -64,9 +79,15 @@ public class Fern  {
      * Example permission format: "(ModId).(Group(Owner/Admin/Mod/Member)).(SpecificPermission)"
      * @param player the player to check permission for
      * @param groupName the permission group to check
+     * @param MinOpLevel the minimum op level required to bypass permission check (nullable)
      * @return true if player has permission, false if not
      */
-    public static boolean checkGroup(@NotNull ServerPlayerEntity player,@NotNull String groupName) {
+    public static boolean checkGroup(@NotNull ServerPlayerEntity player,@NotNull String groupName, @Nullable Number MinOpLevel) {
+        if (MinOpLevel != null) {
+            if (player.hasPermissionLevel(MinOpLevel.intValue())) {
+                return true;
+            }
+        }
         return FernServerInit.data.checkGroupPermission(groupName, player.getUuidAsString());
     }
     
@@ -75,10 +96,16 @@ public class Fern  {
      * Example permission format: "(ModId).(BasePermissionLevel(Owner/Admin/Mod/Member)).(SpecificPermission)"
      * @param source the server command source to check permission for
      * @param groupName the permission group to check
+     * @param MinOpLevel the minimum op level required to bypass permission check (nullable)
      * @return true if player has permission, false if not
      */
-    public static boolean checkGroup(@NotNull ServerCommandSource source,@NotNull String groupName) {
+    public static boolean checkGroup(@NotNull ServerCommandSource source,@NotNull String groupName, @Nullable Number MinOpLevel) {
         if(!source.isExecutedByPlayer()) return true;
+        if(MinOpLevel != null) {
+            if(source.hasPermissionLevel(MinOpLevel.intValue())){
+                return true;
+            }
+        }
         return FernServerInit.data.checkGroupPermission(groupName, source.getPlayer().getUuidAsString());
     }
 
@@ -89,7 +116,7 @@ public class Fern  {
      * @param groupName the permission group to check
      * @return true if player has permission, false if not
      */
-    public static boolean checkGroup(@NotNull String uuid,@NotNull String groupName) {
+    public static boolean checkGroup(@NotNull String uuid, @NotNull String groupName) {
         return FernServerInit.data.checkGroupPermission(groupName, uuid);
     }
 
@@ -139,9 +166,23 @@ public class Fern  {
      * checks if the player has the specified permission. (For use is command registration)
      * Example permission format: "(ModId).(BasePermissionLevel(Owner/Admin/Mod/Member)).(SpecificPermission)"
      * @param permission the permission group to check
+     * @param MinOpLevel the minimum op level required to bypass permission check (nullable)
+     * @return a predicate that checks if the player has the specified permission
      */
-    public static Predicate<ServerCommandSource> require(@NotNull String permission) {
-        return source -> check(source, permission);
+    public static Predicate<ServerCommandSource> require(@NotNull String permission, @Nullable Number MinOpLevel) {
+        if(MinOpLevel != null) {
+            return source -> {
+                if(!source.isExecutedByPlayer()) return true;
+                if(source.hasPermissionLevel(MinOpLevel.intValue())){
+                    return true;
+                }
+                return FernServerInit.data.checkPermission(source.getPlayer().getUuidAsString(), permission);
+            };
+        }
+        return source -> {
+            if(!source.isExecutedByPlayer()) return true;
+            return FernServerInit.data.checkPermission(source.getPlayer().getUuidAsString(), permission);
+        };
     }
 
     /**
