@@ -19,12 +19,11 @@ Fern is a JSON based Permission System made to be easy to use and implement, wit
 5. Start The Server Again.
 
 ## Data Storage Types
-| Type | Description                                                              | Pros     |
-|------|--------------------------------------------------------------------------|----------|
-| `0`  | Stores Data With Permissions In Player (Player {Assigned Perms})         | Untested |
-| `1`  | Stores Data With Players In Permissions (Permission {Players Assigned})  | Untested |
+| Type | Description                                                             |
+|------|-------------------------------------------------------------------------|
+| `0`  | Stores Data With Permissions In Player (Player {Assigned Perms})        |
+| `1`  | Stores Data With Players In Permissions (Permission {Players Assigned}) |
 
-Only data type one is supported at the moment.
 And data does not port to new data type yet.
 
 ## Commands
@@ -45,7 +44,7 @@ dependencies {
 ```
 `properties.gradle`
 ```properties
-fern_version=0.3.1
+fern_version=0.4.0
 ```
 
 ## What's Next
