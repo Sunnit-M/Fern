@@ -5,11 +5,15 @@ Fern
 <hr/>
 </h1>
 
-## Disclaimer
-The project is not at all finished and is still in early development.
+## Disclaimer!
+#### - The project is not at all finished and is still in early development.
+#### - Error Handling speed and other things are not yet implemented.
+#### - Most things are guaranteed to change in future updates.
+#### - Don't expect this to replace other permission systems yet.
 
 ## Overview
-Fern is a JSON based Permission System made to be easy to use and implement, with different data storage methoads.
+#### Fern is a JSON based Permission System made to be easy to use and implement, with different data storage methoads.
+#### This project does not include any commands or utilities to manage permissions, it is only the backend API to store and retrieve permissions. But some can be done by editing files directly.
 
 ## Setup
 1. Add Fern to your server.
@@ -41,16 +45,16 @@ dependencies {
 ```
 `properties.gradle`
 ```properties
-fern_version=0.4.2
+fern_version=0.5.0
 ```
-All versions below 0.4.2 are not functional.
+### All versions below 0.4.2 are not functional.
 
 
 ## What's Next
 - Utility Mod
 - WIKI
 - Using Jackson for speed
-- Port Between Data Storage Types
+- Error Handling
 - Support for more platforms
 
 
