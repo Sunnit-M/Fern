@@ -21,6 +21,23 @@ public class PlayersInPermissions implements BaseDataType {
     public HashMap<String, ArrayList<PlayerData>> data;
     public PlayersInPermissions() { this.data = new HashMap<>(); }
 
+    public PlayersInPermissions(PermissionInPlayer data){
+        this.data = new HashMap<>();
+        data.data.forEach((UUID, pData) -> {
+            for(String permission : pData.permissions){
+                if(this.data.containsKey(permission)){
+                    ArrayList<PlayerData> players = this.data.get(permission);
+                    players.add(new PlayerData(pData.playerUser, UUID));
+                }
+                else{
+                    ArrayList<PlayerData> players = new ArrayList<>();
+                    players.add(new PlayerData(pData.playerUser, UUID));
+                    this.data.put(permission, players);
+                }
+            }
+        });
+    }
+
     @Override
     public void addPermission(String UUID, String permission, String PlayerUser) {
         checkFile();
@@ -32,8 +49,6 @@ public class PlayersInPermissions implements BaseDataType {
             pData.add(new PlayerData(PlayerUser, UUID));
             data.put(permission, pData);
         }
-
-        write();
     }
 
     @Override
