@@ -44,8 +44,10 @@ dependencies {
 ```
 `properties.gradle`
 ```properties
-fern_version=0.4.0
+fern_version=0.4.1
 ```
+All versions below 0.4.1 are not functional.
+
 
 ## What's Next
 - Commands
