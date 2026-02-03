@@ -3,7 +3,6 @@ package net.justsunnit.fern.Utility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.justsunnit.fern.Fern;
 import net.justsunnit.fern.FernServerInit;
 
 import java.io.File;
@@ -13,11 +12,13 @@ import java.io.FileWriter;
 public class ConfigHandler {
     public static File configFile = FabricLoader.getInstance().getConfigDir().resolve("fern.json").toFile();
     public static int dataType = 0;
+    public static int portDataTypeTo = 0;
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 
     public static class Config {
-        public int dataType = 0;
+        public int portDataTypeTo = 0;
+        public int currentDatatype = 0;
     }
 
 
@@ -37,7 +38,8 @@ public class ConfigHandler {
             e.printStackTrace();
         }
 
-        dataType = config.dataType;
+        dataType = config.currentDatatype;
+        portDataTypeTo = config.portDataTypeTo;
     }
 
     public static void save() {

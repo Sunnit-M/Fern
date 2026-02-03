@@ -13,6 +13,7 @@ public class FernServerInit implements DedicatedServerModInitializer {
     public static final String MOD_ID = "fern";
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static Fern.LOADER_TYPE loaderType;
 
     public static BaseDataType data;
 
@@ -31,5 +32,23 @@ public class FernServerInit implements DedicatedServerModInitializer {
                 data.load();
                 LOGGER.info("[Fern] Using Data Type: (1)");
         }
+
+        if (ConfigHandler.dataType != ConfigHandler.portDataTypeTo) {
+            portDataType(ConfigHandler.portDataTypeTo);
+            ConfigHandler.dataType = ConfigHandler.portDataTypeTo;
+            ConfigHandler.save();
+        }
+    }
+
+    public static void portDataType(int newType){
+        switch (newType){
+            case 0:
+                data = new PermissionInPlayer((PlayersInPermissions) data);
+                LOGGER.info("[Fern] Porting Data To Type: (0)");
+            case 1:
+                data = new PlayersInPermissions((PermissionInPlayer) data);
+                LOGGER.info("[Fern] Porting Data To Type: (1)");
+        }
+        data.write();
     }
 }

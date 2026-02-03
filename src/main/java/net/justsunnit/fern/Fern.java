@@ -16,6 +16,11 @@ import org.slf4j.LoggerFactory;
 import java.util.function.Predicate;
 
 public class Fern  {
+    public enum LOADER_TYPE {
+        GSON,
+        Jackson
+    }
+
     /**
      * Checks if the player has the specified permission.
      * Example permission format: "(ModId).(BasePermissionLevel(Owner/Admin/Mod/Member)).(SpecificPermission)"
@@ -82,6 +87,7 @@ public class Fern  {
      * @param MinOpLevel the minimum op level required to bypass permission check (nullable)
      * @return true if player has permission, false if not
      */
+    @Deprecated
     public static boolean checkGroup(@NotNull ServerPlayerEntity player,@NotNull String groupName, @Nullable Number MinOpLevel) {
         if (MinOpLevel != null) {
             if (player.hasPermissionLevel(MinOpLevel.intValue())) {
@@ -90,6 +96,7 @@ public class Fern  {
         }
         return FernServerInit.data.checkGroupPermission(groupName, player.getUuidAsString());
     }
+
     
     /**
      * Checks if the player has the specified permission level
@@ -99,6 +106,7 @@ public class Fern  {
      * @param MinOpLevel the minimum op level required to bypass permission check (nullable)
      * @return true if player has permission, false if not
      */
+    @Deprecated
     public static boolean checkGroup(@NotNull ServerCommandSource source,@NotNull String groupName, @Nullable Number MinOpLevel) {
         if(!source.isExecutedByPlayer()) return true;
         if(MinOpLevel != null) {
@@ -116,6 +124,7 @@ public class Fern  {
      * @param groupName the permission group to check
      * @return true if player has permission, false if not
      */
+    @Deprecated
     public static boolean checkGroup(@NotNull String uuid, @NotNull String groupName) {
         return FernServerInit.data.checkGroupPermission(groupName, uuid);
     }
@@ -127,6 +136,7 @@ public class Fern  {
      * @param groupName the permission group to check
      * @return true if player has permission, false if not
      */
+    @Deprecated
     public static boolean checkGroup(@NotNull GameProfile profile,@NotNull String groupName) {
         return FernServerInit.data.checkGroupPermission(groupName, profile.id().toString());
     }
@@ -230,5 +240,13 @@ public class Fern  {
      */
     public static void removePermission(@NotNull GameProfile profile, @NotNull String permission) {
         FernServerInit.data.removePermission(profile.id().toString(), permission);
+    }
+
+    /**
+     * Ports the data to a different data type.
+     * @param toType the data type to port to
+     */
+    public static void portDataType(@NotNull Number toType){
+        FernServerInit.portDataType(toType.intValue());
     }
 }
