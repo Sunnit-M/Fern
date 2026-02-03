@@ -26,9 +26,6 @@ Fern is a JSON based Permission System made to be easy to use and implement, wit
 
 And data does not port to new data type yet.
 
-## Commands
-WIP
-
 ## Usage
 `Build.Gradle`
 ```gradle
@@ -50,8 +47,10 @@ All versions below 0.4.1 are not functional.
 
 
 ## What's Next
-- Commands
+- Utility Mod
 - WIKI
+- Using Jackson for speed
+- Port Between Data Storage Types
 - Support for more platforms
 
 
