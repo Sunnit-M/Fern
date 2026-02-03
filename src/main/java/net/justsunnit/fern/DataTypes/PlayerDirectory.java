@@ -20,6 +20,7 @@ public class PlayerDirectory {
             FernServerInit.LOGGER.info("[Fern] Player with UUID " + UUID + " already exists in directory, updating username.");
         }
         directory.put(UUID, playerUser);
+        FernServerInit.data.setPlayerUser(UUID, playerUser);
 
         write();
     }
