@@ -27,6 +27,7 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     include (implementation "com.google.code.gson:gson:${project.GSONVersion}" )
+	include (implementation "tools.jackson.core:jackson-core:${project.JacksonCoreVersion}" )
 }
 
 modrinth {

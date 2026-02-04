@@ -5,15 +5,16 @@ import net.justsunnit.fern.FernServerInit;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class PermissionInPlayer implements BaseDataType {
     public static class playerData {
         public String playerUser;
-        public List<String> permissions;
+        public ArrayList<String> permissions;
 
-        public playerData(String playerUser, List<String> permissions) {
+        public playerData(String playerUser, ArrayList<String> permissions) {
             this.playerUser = playerUser;
             this.permissions = permissions;
         }
@@ -36,7 +37,7 @@ public class PermissionInPlayer implements BaseDataType {
                     }
                 }
                 else{
-                    this.data.put(pData.UUID, new playerData(pData.playerUser, List.of(permission)));
+                    this.data.put(pData.UUID, new playerData(pData.playerUser, new ArrayList<>(List.of(permission))));
                 }
             }
         });
@@ -59,7 +60,7 @@ public class PermissionInPlayer implements BaseDataType {
         checkFile();
         if(data.containsKey(UUID)){
             playerData pData = data.get(UUID);
-            return pData.permissions.contains(permission);
+            return (pData.permissions.contains(permission) || (pData.permissions.contains("*") && !pData.permissions.contains("-" + permission)));
         }
         return false;
     }
@@ -92,7 +93,7 @@ public class PermissionInPlayer implements BaseDataType {
             pData.playerUser = playerUser;
         }
         else{
-            playerData pData = new playerData(playerUser, List.of());
+            playerData pData = new playerData(playerUser, new ArrayList<>(List.of()));
             data.put(UUID, pData);
         }
     }
@@ -109,13 +110,7 @@ public class PermissionInPlayer implements BaseDataType {
     @Override
     public void load() {
         if (!baseData.exists()) {
-            try (FileWriter writer = new FileWriter(baseData)) {
-                PermissionInPlayer data = new PermissionInPlayer();
-                this.data = data.data;
-                gson.toJson(data, writer);
-            } catch (Exception e) {
-                FernServerInit.LOGGER.error("[Fern] Failed to create data file!");
-            }
+            emptyWrite();
         } else {
             try (FileReader reader = new FileReader(baseData)) {
                 PermissionInPlayer data = gson.fromJson(reader, PermissionInPlayer.class);
@@ -123,6 +118,19 @@ public class PermissionInPlayer implements BaseDataType {
             } catch (Exception e) {
                 FernServerInit.LOGGER.error("[Fern] Failed to read data file!");
             }
+        }
+    }
+
+    @Override
+    public void emptyWrite() {
+        baseData.getParentFile().mkdirs();
+        try (FileWriter writer = new FileWriter(baseData)) {
+            PermissionInPlayer data = new PermissionInPlayer();
+            this.data = data.data;
+            gson.toJson(data, writer);
+        } catch (Exception e) {
+            FernServerInit.LOGGER.error("[Fern] Failed to create data file!");
+            e.printStackTrace();
         }
     }
 }

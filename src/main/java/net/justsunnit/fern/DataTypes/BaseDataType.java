@@ -17,8 +17,10 @@ public interface BaseDataType {
     void setPlayerUser(String UUID, String playerUser);
     void write();
     void load();
+    void emptyWrite();
 
     boolean checkPermission(String UUID, String permission);
+    @Deprecated
     boolean checkGroupPermission(String groupName, String UUID);
 
     default void checkFile(){

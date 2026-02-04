@@ -27,10 +27,12 @@ public class FernServerInit implements DedicatedServerModInitializer {
                 data = new PermissionInPlayer();
                 data.load();
                 LOGGER.info("[Fern] Using Data Type: (0)");
+                break;
             case 1:
                 data = new PlayersInPermissions();
                 data.load();
                 LOGGER.info("[Fern] Using Data Type: (1)");
+                break;
         }
 
         if (ConfigHandler.dataType != ConfigHandler.portDataTypeTo) {
@@ -45,9 +47,11 @@ public class FernServerInit implements DedicatedServerModInitializer {
             case 0:
                 data = new PermissionInPlayer((PlayersInPermissions) data);
                 LOGGER.info("[Fern] Porting Data To Type: (0)");
+                break;
             case 1:
                 data = new PlayersInPermissions((PermissionInPlayer) data);
                 LOGGER.info("[Fern] Porting Data To Type: (1)");
+                break;
         }
         data.write();
     }

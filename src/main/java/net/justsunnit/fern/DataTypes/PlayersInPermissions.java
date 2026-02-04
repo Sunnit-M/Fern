@@ -82,13 +82,7 @@ public class PlayersInPermissions implements BaseDataType {
     @Override
     public void load() {
         if (!baseData.exists()) {
-            try (FileWriter writer = new FileWriter(baseData)) {
-                PlayersInPermissions data = new PlayersInPermissions();
-                this.data = data.data;
-                gson.toJson(data, writer);
-            } catch (Exception e) {
-                FernServerInit.LOGGER.error("[Fern] Failed to create data file!");
-            }
+            emptyWrite();
         } else {
             try (FileReader reader = new FileReader(baseData)) {
                 PlayersInPermissions data = gson.fromJson(reader, PlayersInPermissions.class);
@@ -96,6 +90,18 @@ public class PlayersInPermissions implements BaseDataType {
             } catch (Exception e) {
                 FernServerInit.LOGGER.error("[Fern] Failed to read data file!");
             }
+        }
+    }
+
+    @Override
+    public void emptyWrite() {
+        baseData.getParentFile().mkdirs();
+        try (FileWriter writer = new FileWriter(baseData)) {
+            PlayersInPermissions data = new PlayersInPermissions();
+            this.data = data.data;
+            gson.toJson(data, writer);
+        } catch (Exception e) {
+            FernServerInit.LOGGER.error("[Fern] Failed to create data file!");
         }
     }
 
