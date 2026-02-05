@@ -1,5 +1,5 @@
 plugins {
-    id "com.modrinth.minotaur" version "2.+"
+	id "com.modrinth.minotaur" version "2.+"
 	id 'fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
@@ -20,30 +20,35 @@ repositories {
 }
 
 dependencies {
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
 
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    include (implementation "com.google.code.gson:gson:${project.GSONVersion}" )
+	include (implementation "com.google.code.gson:gson:${project.GSONVersion}" )
 	include (implementation "tools.jackson.core:jackson-core:${project.JacksonCoreVersion}" )
 }
 
+test {
+	useJUnitPlatform()
+}
+
 modrinth {
-    token = System.getenv("MODRINTH_TOKEN") // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
-    projectId = "jkABu5Hn"
-    versionNumber = "${project.mod_version}" // The version number of this release
-    versionType = "beta" // This is the default -- can also be `beta` or `alpha`
-    uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
-    gameVersions = ["${project.minecraft_version}"] as Iterable<? extends String>
-    // Must be an array, even with only one version
-    loaders = ["fabric"]
-    syncBodyFrom = rootProject.file("README.md").text
+	token = System.getenv("MODRINTH_TOKEN") // Remember to have the MODRINTH_TOKEN environment variable set or else this will fail - just make sure it stays private!
+	projectId = "jkABu5Hn"
+	versionNumber = "${project.mod_version}" // The version number of this release
+	versionType = "beta" // This is the default -- can also be `beta` or `alpha`
+	uploadFile = remapJar // With Loom, this MUST be set to `remapJar` instead of `jar`!
+	gameVersions = ["${project.minecraft_version}"] as Iterable<? extends String>
+	// Must be an array, even with only one version
+	loaders = ["fabric"]
+	syncBodyFrom = rootProject.file("README.md").text
 
-    dependencies { // A special DSL for creating dependencies
+	dependencies { // A special DSL for creating dependencies
 
-    }
+	}
 }
 
 processResources {
