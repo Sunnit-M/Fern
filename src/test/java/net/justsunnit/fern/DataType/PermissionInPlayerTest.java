@@ -2,11 +2,14 @@ package net.justsunnit.fern.DataType;
 
 import net.justsunnit.fern.DataTypes.BaseDataType;
 import net.justsunnit.fern.DataTypes.PermissionInPlayer;
+import net.justsunnit.fern.Fern;
 import net.justsunnit.fern.FernServerInit;
 import net.justsunnit.fern.Utility.ConfigHandler;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
@@ -56,14 +59,78 @@ public class PermissionInPlayerTest {
 
     @Test
     void permissionManipulationTest() {
+        data.addPermission("000000000000000xsd", "haha.balls.kaboom", "TimmyTuffTest");
+        data.removePermission("fedcba9876543210", "logs.view");
+        data.write();
+        String[] expected = """
+        {
+          "1234567890abcdef": {
+            "playerUser": "JohnTest",
+            "permissions": [
+              "test.group.permission",
+              "test.group.permit",
+              "admin.kick",
+              "admin.ban",
+              "chat.color",
+              "world.edit"
+            ]
+          },
+          "abcdef1234567890": {
+            "playerUser": "JaneDoe",
+            "permissions": [
+              "another.permission.node",
+              "test.group.permission",
+              "chat.mute",
+              "chat.unmute",
+              "economy.pay",
+              "economy.balance"
+            ]
+          },
+          "000000000000000xsd": {
+            "playerUser": "TimmyTuffTest",
+            "permissions": [
+              "haha.balls.kaboom"
+            ]
+          },
+          "fedcba9876543210": {
+            "playerUser": "ModUser",
+            "permissions": [
+              "moderator.warn",
+              "moderator.kick",
+              "moderator.mute",
+              "moderator.unmute"
+            ]
+          },
+          "0011223344556677": {
+            "playerUser": "BuilderOne",
+            "permissions": [
+              "builder.place",
+              "builder.break",
+              "builder.rotate",
+              "builder.copy"
+            ]
+          },
+          "8899aabbccddeeff": {
+            "playerUser": "CasualPlayer",
+            "permissions": [
+              "player.home.set",
+              "player.home.tp",
+              "player.spawn",
+              "player.warp"
+            ]
+          }
+        }        
+        """.lines().toArray(String[]::new);
         try {
-            List<String> lines = Files.readAllLines(BaseDataType.baseData.toPath());
-            for (String line : lines) {
-                FernServerInit.LOGGER.info(line);
-            }
+            String[] actual = Files.readAllLines(BaseDataType.baseData.toPath()).toArray(String[]::new);
+            Assertions.assertArrayEquals(expected, actual);
         } catch (IOException e) {
-            throw new AssertionError("Failed to read config file for testing.");
-        };
+            throw new AssertionError("Failed To load data");
+        }
+    }
+
+    @Test
+    void PortToJackson() {
 
     }
 }
