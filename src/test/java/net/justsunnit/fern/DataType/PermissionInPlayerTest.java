@@ -195,5 +195,7 @@ public class PermissionInPlayerTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 }

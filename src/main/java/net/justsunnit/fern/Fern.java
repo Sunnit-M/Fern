@@ -1,24 +1,19 @@
 package net.justsunnit.fern;
 
 import com.mojang.authlib.GameProfile;
-import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.justsunnit.fern.DataTypes.PlayerDirectory;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.function.Predicate;
 
 public class Fern  {
     public enum LOADER_TYPE {
-        GSON,
-        Jackson
+        gson,
+        jackson,
     }
 
     /**

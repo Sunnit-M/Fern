@@ -1,8 +1,10 @@
 package net.justsunnit.fern.DataTypes;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import tools.jackson.core.json.JsonReadFeature;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -11,6 +13,7 @@ public interface BaseDataType {
     Path dataFolder = FabricLoader.getInstance().getConfigDir().resolve("fern_data");
     File baseData = dataFolder.resolve("data.json").toFile();
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonFactory jacksonFactory = JsonFactory.builder().build();
 
     void addPermission(String UUID, String permission, String PlayerUser);
     void removePermission(String UUID, String permission);
