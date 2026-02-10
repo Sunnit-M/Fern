@@ -131,6 +131,69 @@ public class PermissionInPlayerTest {
 
     @Test
     void PortToJackson() {
+        ConfigHandler.portLoaderTypeTo = Fern.LOADER_TYPE.jackson;
 
+        data.write();
+        try {
+            List<String> lines = Files.readAllLines(BaseDataType.baseData.toPath());
+            String[] d = lines.toArray(String[]::new);
+            String[] expected = """
+            {
+              "1234567890abcdef": {
+                "playerUser": "JohnTest",
+                "permissions": [
+                  "test.group.permission",
+                  "test.group.permit",
+                  "admin.kick",
+                  "admin.ban",
+                  "chat.color",
+                  "world.edit"
+                ]
+              },
+              "abcdef1234567890": {
+                "playerUser": "JaneDoe",
+                "permissions": [
+                  "another.permission.node",
+                  "test.group.permission",
+                  "chat.mute",
+                  "chat.unmute",
+                  "economy.pay",
+                  "economy.balance"
+                ]
+              },
+              "fedcba9876543210": {
+                "playerUser": "ModUser",
+                "permissions": [
+                  "moderator.warn",
+                  "moderator.kick",
+                  "moderator.mute",
+                  "moderator.unmute",
+                  "logs.view"
+                ]
+              },
+              "0011223344556677": {
+                "playerUser": "BuilderOne",
+                "permissions": [
+                  "builder.place",
+                  "builder.break",
+                  "builder.rotate",
+                  "builder.copy"
+                ]
+              },
+              "8899aabbccddeeff": {
+                "playerUser": "CasualPlayer",
+                "permissions": [
+                  "player.home.set",
+                  "player.home.tp",
+                  "player.spawn",
+                  "player.warp"
+                ]
+              }
+            }
+            """.lines().toArray(String[]::new);
+             Assertions.assertArrayEquals(expected, d);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
