@@ -1,4 +1,4 @@
-name: build and upoload
+name: build and upload
 
 on:
   push:
