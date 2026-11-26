@@ -1,0 +1,7 @@
+// Only chnage the port to fields as other fields are managed by the mod.
+{
+  "portDataTypeTo": 0,
+  "currentDatatype": 0,
+  "currentLoaderType": "gson",
+  "portLoaderTypeTo": "gson"
+}

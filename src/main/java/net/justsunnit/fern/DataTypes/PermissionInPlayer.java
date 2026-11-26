@@ -262,6 +262,7 @@ public class PermissionInPlayer implements BaseDataType {
                 break;
             case jackson:
                 try (JsonGenerator gen = jacksonFactory.createGenerator(baseData, JsonEncoding.UTF8)) {
+                    gen.writeString("");
                     gen.writeStartObject();
                     gen.writeEndObject();
                     gen.close();
